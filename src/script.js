@@ -2,7 +2,7 @@ import './style.css'
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import * as dat from 'lil-gui'
-import CANNON from 'cannon'
+import * as CANNON from 'cannon-es'
 
 /**
  * Debug
@@ -61,14 +61,16 @@ const scene = new THREE.Scene()
 /**
  * Sounds
  */
-const hitSound = new Audio('/sounds/hit.mp3')
+ const hitSound = new Audio('/sounds/hit.mp3')
+//  hitSound.autoplay = true
 
-const playHitSound = (collision) => {
-
+ const playHitSound = (collision) => {
+    
     const impactStrength = collision.contact.getImpactVelocityAlongNormal()
 
     if(impactStrength > 1.5){
-        hitSound.volume = Math.random()
+        hitSound.volume = (impactStrength - 1.5) / (14 - 1.5)
+        console.log(hitSound.volume)
         hitSound.currentTime = 0
         hitSound.play()
     }
@@ -133,7 +135,7 @@ floorBody.quaternion.setFromAxisAngle(
     new CANNON.Vec3(-1, 0, 0),
     Math.PI * 0.5
 )
-world.add(floorBody)
+world.addBody(floorBody)
 
 // /**
 //  * Test sphere
