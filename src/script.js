@@ -70,7 +70,6 @@ const scene = new THREE.Scene()
 
     if(impactStrength > 1.5){
         hitSound.volume = (impactStrength - 1.5) / (14 - 1.5)
-        console.log(hitSound.volume)
         hitSound.currentTime = 0
         hitSound.play()
     }
